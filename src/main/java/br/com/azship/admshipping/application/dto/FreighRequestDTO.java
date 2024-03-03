@@ -1,10 +1,8 @@
 package br.com.azship.admshipping.application.dto;
 
-import br.com.azship.admshipping.domain.FreighRequestDomainDTO;
-import br.com.azship.admshipping.domain.Freight;
+import br.com.azship.admshipping.domain.dto.FreighRequestDomainDTO;
 
 import java.util.Map;
-import java.util.UUID;
 
 public record FreighRequestDTO(
 

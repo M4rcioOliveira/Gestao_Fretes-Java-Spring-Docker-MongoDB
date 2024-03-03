@@ -1,14 +1,18 @@
 package br.com.azship.admshipping.domain.service;
 
 import br.com.azship.admshipping.domain.Client;
-import br.com.azship.admshipping.domain.FreighRequestDomainDTO;
-import br.com.azship.admshipping.domain.FreighResponseDomainDTO;
+import br.com.azship.admshipping.domain.dto.FreighRequestDomainDTO;
+import br.com.azship.admshipping.domain.dto.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.Freight;
 import br.com.azship.admshipping.domain.repository.FreightRepository;
+import br.com.azship.admshipping.domain.util.DomainPage;
+import br.com.azship.admshipping.domain.util.DomainPageable;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-public class FreightServiceImpl implements FreightService{
+public class FreightServiceImpl implements FreightService {
 
     private final FreightRepository freightRepository;
     private final ClientService clientService;
@@ -20,8 +24,14 @@ public class FreightServiceImpl implements FreightService{
 
 
     @Override
-    public FreighResponseDomainDTO findFreightByValue(Object value) {
-        return null;
+    public DomainPage<FreighResponseDomainDTO> findAllBy(String value, DomainPageable domainPageable) {
+
+        DomainPage<Freight> domainPage = freightRepository.findAllBy(value, domainPageable);
+
+        List<Freight> freight = domainPage.content();
+
+        return new DomainPage<>(freight.stream().map(FreighResponseDomainDTO::new).collect(Collectors.toList()),
+                domainPage.totalPages(), domainPage.totalElements(), domainPage.pageSize(), domainPage.pageNumber());
     }
 
     @Override

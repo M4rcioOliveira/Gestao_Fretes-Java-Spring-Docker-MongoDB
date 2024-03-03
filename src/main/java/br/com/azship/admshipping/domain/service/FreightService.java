@@ -1,12 +1,13 @@
 package br.com.azship.admshipping.domain.service;
 
-import br.com.azship.admshipping.domain.FreighRequestDomainDTO;
-import br.com.azship.admshipping.domain.FreighResponseDomainDTO;
-import br.com.azship.admshipping.domain.Freight;
+import br.com.azship.admshipping.domain.dto.FreighRequestDomainDTO;
+import br.com.azship.admshipping.domain.dto.FreighResponseDomainDTO;
+import br.com.azship.admshipping.domain.util.DomainPage;
+import br.com.azship.admshipping.domain.util.DomainPageable;
 
 public interface FreightService {
 
-    FreighResponseDomainDTO findFreightByValue(Object value);
+    DomainPage<FreighResponseDomainDTO> findAllBy(String value, DomainPageable domainPageable);
 
     FreighResponseDomainDTO findFreightById(String id);
 

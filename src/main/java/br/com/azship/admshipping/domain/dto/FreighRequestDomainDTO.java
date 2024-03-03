@@ -1,4 +1,4 @@
-package br.com.azship.admshipping.domain;
+package br.com.azship.admshipping.domain.dto;
 
 import java.util.Map;
 

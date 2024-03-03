@@ -1,5 +1,7 @@
 package br.com.azship.admshipping.domain;
 
+import br.com.azship.admshipping.domain.dto.FreighResponseDomainDTO;
+
 import java.util.Map;
 
 public class Freight {

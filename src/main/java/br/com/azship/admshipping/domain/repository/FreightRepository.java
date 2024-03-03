@@ -1,14 +1,14 @@
 package br.com.azship.admshipping.domain.repository;
 
-import br.com.azship.admshipping.domain.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.Freight;
+import br.com.azship.admshipping.domain.util.DomainPage;
+import br.com.azship.admshipping.domain.util.DomainPageable;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public interface FreightRepository {
 
-    Optional<Freight> findByValue(Object value);
+    DomainPage<Freight> findAllBy(String value, DomainPageable domainPageable);
 
     Optional<Freight> findById(String id);
 
