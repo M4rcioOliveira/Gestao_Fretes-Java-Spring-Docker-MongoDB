@@ -3,15 +3,16 @@ package br.com.azship.admshipping.domain;
 import java.util.Map;
 
 public class Freight {
-
     private String id;
+    private Client client;
     private Map<String, Object> propriedades;
 
     public Freight() {
     }
 
-    public Freight(String id, Map<String, Object> propriedades) {
+    public Freight(String id, Client client, Map<String, Object> propriedades) {
         this.id = id;
+        this.client = client;
         this.propriedades = propriedades;
     }
 
@@ -30,4 +31,19 @@ public class Freight {
     public void setPropriedades(Map<String, Object> propriedades) {
         this.propriedades = propriedades;
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public static FreighResponseDomainDTO toFreightDomainDTO(Freight freight){
+
+        return new FreighResponseDomainDTO(freight.getId(), freight.client, freight.getPropriedades());
+
+    }
+
 }

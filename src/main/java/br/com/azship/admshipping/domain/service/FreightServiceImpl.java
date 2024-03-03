@@ -1,5 +1,8 @@
 package br.com.azship.admshipping.domain.service;
 
+import br.com.azship.admshipping.domain.Client;
+import br.com.azship.admshipping.domain.FreighRequestDomainDTO;
+import br.com.azship.admshipping.domain.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.Freight;
 import br.com.azship.admshipping.domain.repository.FreightRepository;
 
@@ -8,29 +11,37 @@ import java.util.UUID;
 public class FreightServiceImpl implements FreightService{
 
     private final FreightRepository freightRepository;
+    private final ClientService clientService;
 
-    public FreightServiceImpl(FreightRepository freightRepository) {
+    public FreightServiceImpl(FreightRepository freightRepository, ClientService clientService) {
         this.freightRepository = freightRepository;
+        this.clientService = clientService;
     }
 
 
     @Override
-    public Freight findFreightByValue(Object value) {
+    public FreighResponseDomainDTO findFreightByValue(Object value) {
         return null;
     }
 
     @Override
-    public Freight findFreightById(String id) {
-        return freightRepository.findById(id).orElseThrow(() -> new RuntimeException("Frete não encontrado"));
+    public FreighResponseDomainDTO findFreightById(String id) {
+        return null;
     }
 
     @Override
-    public Freight saveFreight(Freight freight) {
-        return freightRepository.save(freight);
+    public FreighResponseDomainDTO saveFreight(FreighRequestDomainDTO freight) {
+
+        Client client = clientService.findClienyById(freight.client_id());
+
+        Freight savedFreight = freightRepository.save(new Freight(UUID.randomUUID().toString(), client, freight.propriedades()));
+
+        return Freight.toFreightDomainDTO(savedFreight);
+
     }
 
     @Override
-    public Freight updateFreight(Freight freight) {
+    public FreighResponseDomainDTO updateFreight(FreighRequestDomainDTO freight) {
         return null;
     }
 

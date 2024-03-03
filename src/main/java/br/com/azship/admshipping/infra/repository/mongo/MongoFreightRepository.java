@@ -1,5 +1,6 @@
 package br.com.azship.admshipping.infra.repository.mongo;
 
+import br.com.azship.admshipping.domain.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.Freight;
 import br.com.azship.admshipping.domain.repository.FreightRepository;
 import br.com.azship.admshipping.infra.entity.FreightEntity;
@@ -16,32 +17,33 @@ public class MongoFreightRepository implements FreightRepository {
         this.mongoFreightRepository = mongoFreightRepository;
     }
 
+
     @Override
-    public Optional<Freight> findByValue(final Object value) {
+    public Optional<Freight> findByValue(Object value) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Freight> findById(final String id) {
+    public Optional<Freight> findById(String id) {
+        return Optional.empty();
+    }
 
-        Optional<FreightEntity> freightEntity = mongoFreightRepository.findById(id);
+    @Override
+    public Freight save(Freight freight) {
 
-        return freightEntity.map(FreightEntity::toFreight);
+        FreightEntity freightEntity = mongoFreightRepository.save(new FreightEntity(freight));
+
+        return FreightEntity.toFreight(freightEntity);
 
     }
 
     @Override
-    public Freight save(final Freight freight) {
-        return FreightEntity.toFreight(mongoFreightRepository.save(new FreightEntity(freight)));
-    }
-
-    @Override
-    public Freight update(final Freight freight) {
+    public Freight update(Freight freight) {
         return null;
     }
 
     @Override
-    public void remove(final String freight) {
+    public void remove(String freight) {
 
     }
 }

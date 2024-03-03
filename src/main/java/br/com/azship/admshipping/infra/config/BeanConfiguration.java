@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Bean
-    FreightService freightService(final FreightRepository freightRepository){
-        return new FreightServiceImpl(freightRepository);
+    FreightService freightService(final FreightRepository freightRepository, final ClientService clientService){
+        return new FreightServiceImpl(freightRepository, clientService);
     }
 
     @Bean

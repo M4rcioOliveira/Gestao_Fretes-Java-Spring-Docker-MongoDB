@@ -1,6 +1,6 @@
 package br.com.azship.admshipping.infra.integration;
 
-import br.com.azship.admshipping.infra.dto.ClientResponseDTO;
+import br.com.azship.admshipping.infra.dto.ClientDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -10,6 +10,6 @@ import java.util.List;
 public interface FeignMockyClient {
 
     @GetMapping
-    List<ClientResponseDTO> getClients();
+    List<ClientDTO> getClients();
 
 }

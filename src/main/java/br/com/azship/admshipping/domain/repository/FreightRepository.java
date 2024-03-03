@@ -1,5 +1,6 @@
 package br.com.azship.admshipping.domain.repository;
 
+import br.com.azship.admshipping.domain.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.Freight;
 
 import java.util.Optional;

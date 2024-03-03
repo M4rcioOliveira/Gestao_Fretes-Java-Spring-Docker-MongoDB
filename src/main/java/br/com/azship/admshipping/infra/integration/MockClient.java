@@ -2,7 +2,7 @@ package br.com.azship.admshipping.infra.integration;
 
 import br.com.azship.admshipping.domain.Client;
 import br.com.azship.admshipping.domain.integration.ClientIntegration;
-import br.com.azship.admshipping.infra.dto.ClientResponseDTO;
+import br.com.azship.admshipping.infra.dto.ClientDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,9 +20,9 @@ public class MockClient implements ClientIntegration {
     @Override
     public Optional<Client> findById(String id) {
 
-        List<ClientResponseDTO> clients = feignMockyClient.getClients();
+        List<ClientDTO> clients = feignMockyClient.getClients();
 
-        return clients.stream().filter(c -> c.client_id().equals(id)).map(ClientResponseDTO::toClient).findFirst();
+        return clients.stream().filter(c -> c.client_id().equals(id)).map(ClientDTO::toClient).findFirst();
 
     }
 }

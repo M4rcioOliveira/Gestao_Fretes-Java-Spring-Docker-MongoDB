@@ -1,14 +1,12 @@
 package br.com.azship.admshipping.application.rest;
 
-import br.com.azship.admshipping.application.dto.SaveFreightDTO;
+import br.com.azship.admshipping.application.dto.FreighRequestDTO;
+import br.com.azship.admshipping.domain.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.Freight;
 import br.com.azship.admshipping.domain.service.FreightService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/freight")
@@ -21,9 +19,9 @@ public class FreightController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Freight> saveFreight(@RequestBody SaveFreightDTO freightDTO) {
+    public ResponseEntity<FreighResponseDomainDTO> saveFreight(@RequestBody FreighRequestDTO freighRequestDTO) {
 
-        Freight body = freightService.saveFreight(SaveFreightDTO.toFreight(freightDTO));
+        FreighResponseDomainDTO body = freightService.saveFreight(FreighRequestDTO.toFreighRequestDomainDTO(freighRequestDTO));
 
         return new ResponseEntity<>(body, HttpStatus.CREATED);
 
@@ -32,9 +30,7 @@ public class FreightController {
     @GetMapping("/{id}")
     public ResponseEntity<Freight> findFreightById(@PathVariable String id) {
 
-        Freight body = freightService.findFreightById(id);
-
-        return new ResponseEntity<>(body, HttpStatus.OK);
+        return null;
 
     }
 
