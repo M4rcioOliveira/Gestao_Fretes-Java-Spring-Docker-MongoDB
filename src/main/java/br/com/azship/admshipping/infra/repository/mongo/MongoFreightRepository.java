@@ -6,15 +6,14 @@ import br.com.azship.admshipping.infra.entity.FreightEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class MongoFreightRepository implements FreightRepository {
 
-    private final SpringDataMongoFreightRepository freightRepository;
+    private final SpringDataMongoFreightRepository mongoFreightRepository;
 
-    public MongoFreightRepository(SpringDataMongoFreightRepository freightRepository) {
-        this.freightRepository = freightRepository;
+    public MongoFreightRepository(SpringDataMongoFreightRepository mongoFreightRepository) {
+        this.mongoFreightRepository = mongoFreightRepository;
     }
 
     @Override
@@ -25,7 +24,7 @@ public class MongoFreightRepository implements FreightRepository {
     @Override
     public Optional<Freight> findById(final String id) {
 
-        Optional<FreightEntity> freightEntity = freightRepository.findById(id);
+        Optional<FreightEntity> freightEntity = mongoFreightRepository.findById(id);
 
         return freightEntity.map(FreightEntity::toFreight);
 
@@ -33,7 +32,7 @@ public class MongoFreightRepository implements FreightRepository {
 
     @Override
     public Freight save(final Freight freight) {
-        return FreightEntity.toFreight(freightRepository.save(new FreightEntity(freight)));
+        return FreightEntity.toFreight(mongoFreightRepository.save(new FreightEntity(freight)));
     }
 
     @Override
