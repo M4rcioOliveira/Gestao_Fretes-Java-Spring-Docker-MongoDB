@@ -12,6 +12,8 @@ public interface FreightService {
 
     FreighResponseDomainDTO findFreightById(String id);
 
+    DomainPage<FreighResponseDomainDTO> findFreightByCnpj(String cnpj, DomainPageable domainPageable);
+
     FreighResponseDomainDTO registerFreight(FreighRegistryRequestDomainDTO freight);
 
     FreighResponseDomainDTO updateFreight(FreighUpdateRequestDomainDTO freight);

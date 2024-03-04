@@ -9,21 +9,17 @@ import br.com.azship.admshipping.infra.entity.FreightEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class MongoFreightRepository implements FreightRepository {
 
-    private final MongoTemplate mongoTemplate;
 
     private final SpringDataMongoFreightRepository mongoFreightRepository;
 
-    public MongoFreightRepository(MongoTemplate mongoTemplate, SpringDataMongoFreightRepository mongoFreightRepository) {
-        this.mongoTemplate = mongoTemplate;
+    public MongoFreightRepository(SpringDataMongoFreightRepository mongoFreightRepository) {
         this.mongoFreightRepository = mongoFreightRepository;
     }
 
@@ -31,33 +27,13 @@ public class MongoFreightRepository implements FreightRepository {
     @Override
     public DomainPage<Freight> findAllBy(String value, DomainPageable domainPageable) {
 
-//        Pageable pageable = PageRequest.of(domainPageable.getPage(), domainPageable.getSize());
-//
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("propriedadesJson").regex(".*" + value + ".*")).with(pageable);
-//        List<FreightEntity> freights = mongoTemplate.find(query, FreightEntity.class);
-//
-//        int totalPages;
-//        int totalElements;
-//        int pageSize = pageable.getPageSize();
-//        int pageNumber = pageable.getPageNumber();
-//
-//        return  freights.stream().map(f -> new Freight(f.getId(), ClientDTO.toClient(f.getCliente()), f.getPropriedades())).toList();
-
         Pageable pageable = PageRequest.of(domainPageable.pageNumber(), domainPageable.pageSize());
 
         Page<FreightEntity> pageFreights = mongoFreightRepository.findByPropriedadesJsonRegex(value, pageable);
 
-        List<FreightEntity> freights = pageFreights.getContent();
+        Result result = getResult(pageFreights, pageable);
 
-        int totalPages = pageFreights.getTotalPages();
-        long totalElements = pageFreights.getTotalElements();
-        int pageSize = pageable.getPageSize();
-        int pageNumber = pageable.getPageNumber();
-
-        var list = freights.stream().map(f -> new Freight(f.getId(), ClientDTO.toClient(f.getCliente()), f.getPropriedades())).toList();
-
-        return new DomainPage<Freight>(list, totalPages, totalElements, pageSize, pageNumber);
+        return getFreightDomainPage(result);
 
     }
 
@@ -70,8 +46,15 @@ public class MongoFreightRepository implements FreightRepository {
     }
 
     @Override
-    public DomainPage<Freight> findByCnpj(String Cnpj) {
-        return null;
+    public DomainPage<Freight> findByCnpj(String cnpj, DomainPageable domainPageable) {
+
+        Pageable pageable = PageRequest.of(domainPageable.pageNumber(), domainPageable.pageSize());
+
+        Page<FreightEntity> pageFreights = mongoFreightRepository.findByClienteCnpjRegex(cnpj, pageable);
+
+        Result result = getResult(pageFreights, pageable);
+
+        return getFreightDomainPage(result);
     }
 
 
@@ -98,5 +81,27 @@ public class MongoFreightRepository implements FreightRepository {
 
         mongoFreightRepository.deleteById(id);
 
+    }
+
+    //Auxiliares
+
+    private static Result getResult(Page<FreightEntity> pageFreights, Pageable pageable) {
+        List<FreightEntity> freightsEntity = pageFreights.getContent();
+
+        int totalPages = pageFreights.getTotalPages();
+        long totalElements = pageFreights.getTotalElements();
+        int pageSize = pageable.getPageSize();
+        int pageNumber = pageable.getPageNumber();
+
+        List<Freight> freights = freightsEntity.stream().map(f -> new Freight(f.getId(), ClientDTO.toClient(f.getCliente()), f.getPropriedades())).toList();
+        return new Result(totalPages, totalElements, pageSize, pageNumber, freights);
+
+    }
+
+    private record Result(int totalPages, long totalElements, int pageSize, int pageNumber, List<Freight> freights) {
+    }
+
+    private static DomainPage<Freight> getFreightDomainPage(Result result) {
+        return new DomainPage<>(result.freights(), result.totalPages(), result.totalElements(), result.pageSize(), result.pageNumber());
     }
 }

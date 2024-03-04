@@ -16,4 +16,6 @@ public interface SpringDataMongoFreightRepository extends MongoRepository<Freigh
 
     Page<FreightEntity> findByPropriedadesJsonRegex(String value, Pageable pageable);
 
+    Page<FreightEntity> findByClienteCnpjRegex(String value, Pageable pageable);
+
 }

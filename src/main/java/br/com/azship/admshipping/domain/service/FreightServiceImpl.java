@@ -45,6 +45,19 @@ public class FreightServiceImpl implements FreightService {
     }
 
     @Override
+    public DomainPage<FreighResponseDomainDTO> findFreightByCnpj(String cnpj, DomainPageable domainPageable) {
+
+        DomainPage<Freight> domainPage = freightRepository.findByCnpj(cnpj, domainPageable);
+
+        List<Freight> freight = domainPage.content();
+
+        return new DomainPage<>(freight.stream().map(FreighResponseDomainDTO::new).collect(Collectors.toList()),
+                domainPage.totalPages(), domainPage.totalElements(), domainPage.pageSize(), domainPage.pageNumber());
+
+    }
+
+
+    @Override
     public FreighResponseDomainDTO registerFreight(FreighRegistryRequestDomainDTO dto) {
 
         Client client = clientService.findClienyById(dto.client_id());

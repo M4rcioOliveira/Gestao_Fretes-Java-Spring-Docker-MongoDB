@@ -10,7 +10,7 @@ public interface FreightRepository {
 
     Freight findById(String id);
 
-    DomainPage<Freight> findByCnpj(String Cnpj);
+    DomainPage<Freight> findByCnpj(String cnpj, DomainPageable domainPageable);
 
     Freight save(Freight freight);
 

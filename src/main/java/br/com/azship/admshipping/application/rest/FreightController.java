@@ -64,6 +64,19 @@ public class FreightController {
 
     }
 
+    @GetMapping("/cnpj/{cnpj}")
+    public ResponseEntity<ApiResponseDTO<List<FreighResponseDomainDTO>>> findByCnpj(@PathVariable String cnpj, @PageableDefault(size = 10, page = 0) Pageable pageable) {
+
+        DomainPage<FreighResponseDomainDTO> domain = freightService.findFreightByCnpj(cnpj, new DomainPageable(pageable.getPageSize(), pageable.getPageNumber()));
+
+        List<FreighResponseDomainDTO> content = domain.content();
+
+        ApiResponseDTO<List<FreighResponseDomainDTO>> body = new ApiResponseDTO<>(content, new AppPageDTO(domain.totalPages(), domain.totalElements(), domain.pageSize(), domain.pageNumber()));
+
+        return new ResponseEntity<>(body, HttpStatus.OK);
+
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> remove(@PathVariable String id) {
 
@@ -72,6 +85,7 @@ public class FreightController {
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 
     }
+
 
 
 
