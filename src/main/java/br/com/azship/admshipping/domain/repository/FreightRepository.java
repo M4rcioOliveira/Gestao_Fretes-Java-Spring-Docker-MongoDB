@@ -1,8 +1,8 @@
 package br.com.azship.admshipping.domain.repository;
 
 import br.com.azship.admshipping.domain.Freight;
-import br.com.azship.admshipping.domain.util.DomainPage;
-import br.com.azship.admshipping.domain.util.DomainPageable;
+import br.com.azship.admshipping.domain.custom.DomainPage;
+import br.com.azship.admshipping.domain.custom.DomainPageable;
 
 public interface FreightRepository {
 

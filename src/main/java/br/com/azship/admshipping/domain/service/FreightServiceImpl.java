@@ -6,8 +6,8 @@ import br.com.azship.admshipping.domain.dto.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.Freight;
 import br.com.azship.admshipping.domain.dto.FreighUpdateRequestDomainDTO;
 import br.com.azship.admshipping.domain.repository.FreightRepository;
-import br.com.azship.admshipping.domain.util.DomainPage;
-import br.com.azship.admshipping.domain.util.DomainPageable;
+import br.com.azship.admshipping.domain.custom.DomainPage;
+import br.com.azship.admshipping.domain.custom.DomainPageable;
 
 import java.util.List;
 import java.util.UUID;
@@ -75,7 +75,7 @@ public class FreightServiceImpl implements FreightService {
 
         freight.setPropriedades(domainDTO.propriedades());
 
-        return Freight.toFreightDomainDTO(freightRepository.save(freight));
+        return Freight.toFreightDomainDTO(freightRepository.update(freight));
 
     }
 

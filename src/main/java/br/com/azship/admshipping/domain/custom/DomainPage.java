@@ -1,4 +1,4 @@
-package br.com.azship.admshipping.domain.util;
+package br.com.azship.admshipping.domain.custom;
 
 import java.util.List;
 

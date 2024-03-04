@@ -3,8 +3,8 @@ package br.com.azship.admshipping.domain.service;
 import br.com.azship.admshipping.domain.dto.FreighRegistryRequestDomainDTO;
 import br.com.azship.admshipping.domain.dto.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.dto.FreighUpdateRequestDomainDTO;
-import br.com.azship.admshipping.domain.util.DomainPage;
-import br.com.azship.admshipping.domain.util.DomainPageable;
+import br.com.azship.admshipping.domain.custom.DomainPage;
+import br.com.azship.admshipping.domain.custom.DomainPageable;
 
 public interface FreightService {
 
