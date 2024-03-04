@@ -60,7 +60,7 @@ public class FreightServiceImpl implements FreightService {
     @Override
     public FreighResponseDomainDTO registerFreight(FreighRegistryRequestDomainDTO dto) {
 
-        Client client = clientService.findClienyById(dto.client_id());
+        Client client = clientService.findClientById(dto.client_id());
 
         return Freight.toFreightDomainDTO(freightRepository.save(new Freight(UUID.randomUUID().toString(), client, dto.propriedades())));
 

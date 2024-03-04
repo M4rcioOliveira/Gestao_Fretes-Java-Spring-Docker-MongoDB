@@ -4,6 +4,6 @@ import br.com.azship.admshipping.domain.Client;
 
 public interface ClientService {
 
-    Client findClienyById(String id);
+    Client findClientById(String id);
 
 }

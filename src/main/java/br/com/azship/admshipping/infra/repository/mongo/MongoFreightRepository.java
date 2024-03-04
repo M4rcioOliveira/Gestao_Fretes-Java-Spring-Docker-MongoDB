@@ -1,6 +1,7 @@
 package br.com.azship.admshipping.infra.repository.mongo;
 
 import br.com.azship.admshipping.domain.Freight;
+import br.com.azship.admshipping.domain.exception.FreightNotFoundException;
 import br.com.azship.admshipping.domain.repository.FreightRepository;
 import br.com.azship.admshipping.domain.util.DomainPage;
 import br.com.azship.admshipping.domain.util.DomainPageable;
@@ -40,7 +41,7 @@ public class MongoFreightRepository implements FreightRepository {
     @Override
     public Freight findById(String id) {
 
-        FreightEntity freight = mongoFreightRepository.findById(id).orElseThrow(() -> new RuntimeException("Frete não encontrado!"));
+        FreightEntity freight = mongoFreightRepository.findById(id).orElseThrow(() -> new FreightNotFoundException("Frete [" + id +"] não encontrado."));
 
         return FreightEntity.toFreight(freight);
     }

@@ -1,6 +1,7 @@
 package br.com.azship.admshipping.domain.service;
 
 import br.com.azship.admshipping.domain.Client;
+import br.com.azship.admshipping.domain.exception.ClientNotFoundException;
 import br.com.azship.admshipping.domain.integration.ClientIntegration;
 
 public class ClientServiceImpl implements ClientService{
@@ -12,7 +13,7 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public Client findClienyById(String id) {
-        return clientIntegration.findById(id).orElseThrow(() -> new RuntimeException("Client não encontrado"));
+    public Client findClientById(String id) {
+        return clientIntegration.findById(id).orElseThrow(() -> new ClientNotFoundException("Cliente [" + id +"] não encontrado."));
     }
 }

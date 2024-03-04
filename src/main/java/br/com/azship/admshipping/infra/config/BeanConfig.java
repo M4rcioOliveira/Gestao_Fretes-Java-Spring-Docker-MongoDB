@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackageClasses = AdmShippingApplication.class)
-public class BeanConfiguration {
+public class BeanConfig {
 
     @Bean
     FreightService freightService(final FreightRepository freightRepository, final ClientService clientService){
