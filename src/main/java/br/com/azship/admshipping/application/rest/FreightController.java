@@ -5,6 +5,7 @@ import br.com.azship.admshipping.domain.dto.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.service.FreightService;
 import br.com.azship.admshipping.domain.util.DomainPage;
 import br.com.azship.admshipping.domain.util.DomainPageable;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -24,8 +25,9 @@ public class FreightController {
         this.freightService = freightService;
     }
 
+    @Operation(summary = "Registra um novo frete associado a um cliente com base no *cliente_id*")
     @PostMapping("/register")
-    public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> registerFreight(@Valid  @RequestBody FreighRegistryRequestDTO freighRegistryRequestDTO) {
+    public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> registerFreight(@Valid @RequestBody FreighRegistryRequestDTO freighRegistryRequestDTO) {
 
         FreighResponseDomainDTO body = freightService.registerFreight(FreighRegistryRequestDTO.toFreighRegistryRequestDomainDTO(freighRegistryRequestDTO));
 
@@ -33,6 +35,7 @@ public class FreightController {
 
     }
 
+    @Operation(summary = "Atualiza um frete com base no *frete_id*")
     @PatchMapping("/update")
     public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> updateFreight(@Valid @RequestBody FreighUpdateRequestDTO freighUpdateRequestDTO) {
 
@@ -43,6 +46,7 @@ public class FreightController {
     }
 
 
+    @Operation(summary = "Lista fretes paginados com base na busca em todas propriedades de um frete para todos cadastrados no banco")
     @GetMapping("/propriedade")
     public ResponseEntity<ApiResponseDTO<List<FreighResponseDomainDTO>>> findAllBy(@RequestParam String value, @PageableDefault(size = 10, page = 0) Pageable pageable) {
 
@@ -56,6 +60,7 @@ public class FreightController {
 
     }
 
+    @Operation(summary = "Busca um frete pelo ID")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> findByID(@PathVariable String id) {
 
@@ -64,6 +69,8 @@ public class FreightController {
         return new ResponseEntity<>(new ApiResponseDTO<>(new FreighResponseDTO(body), null), HttpStatus.OK);
 
     }
+
+    @Operation(summary = "Lista fretes paginados por CNPJ")
 
     @GetMapping("/documento")
     public ResponseEntity<ApiResponseDTO<List<FreighResponseDomainDTO>>> findByCnpj(@RequestParam String cnpj, @PageableDefault(size = 10, page = 0) Pageable pageable) {
@@ -77,6 +84,8 @@ public class FreightController {
         return new ResponseEntity<>(body, HttpStatus.OK);
 
     }
+
+    @Operation(summary = "Remove um frete do banco pelo ID")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> remove(@PathVariable String id) {
