@@ -62,9 +62,18 @@ public class MongoFreightRepository implements FreightRepository {
     }
 
     @Override
-    public Optional<Freight> findById(String id) {
-        return Optional.empty();
+    public Freight findById(String id) {
+
+        FreightEntity freight = mongoFreightRepository.findById(id).orElseThrow(() -> new RuntimeException("Frete não encontrado!"));
+
+        return FreightEntity.toFreight(freight);
     }
+
+    @Override
+    public DomainPage<Freight> findByCnpj(String Cnpj) {
+        return null;
+    }
+
 
     @Override
     public Freight save(Freight freight) {
@@ -77,11 +86,17 @@ public class MongoFreightRepository implements FreightRepository {
 
     @Override
     public Freight update(Freight freight) {
-        return null;
+
+        FreightEntity freightEntity = mongoFreightRepository.save(new FreightEntity(freight));
+
+        return FreightEntity.toFreight(freightEntity);
+
     }
 
     @Override
-    public void remove(String freight) {
+    public void remove(String id) {
+
+        mongoFreightRepository.deleteById(id);
 
     }
 }

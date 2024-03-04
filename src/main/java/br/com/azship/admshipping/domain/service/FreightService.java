@@ -1,7 +1,8 @@
 package br.com.azship.admshipping.domain.service;
 
-import br.com.azship.admshipping.domain.dto.FreighRequestDomainDTO;
+import br.com.azship.admshipping.domain.dto.FreighRegistryRequestDomainDTO;
 import br.com.azship.admshipping.domain.dto.FreighResponseDomainDTO;
+import br.com.azship.admshipping.domain.dto.FreighUpdateRequestDomainDTO;
 import br.com.azship.admshipping.domain.util.DomainPage;
 import br.com.azship.admshipping.domain.util.DomainPageable;
 
@@ -11,10 +12,10 @@ public interface FreightService {
 
     FreighResponseDomainDTO findFreightById(String id);
 
-    FreighResponseDomainDTO saveFreight(FreighRequestDomainDTO freight);
+    FreighResponseDomainDTO registerFreight(FreighRegistryRequestDomainDTO freight);
 
-    FreighResponseDomainDTO updateFreight(FreighRequestDomainDTO freight);
+    FreighResponseDomainDTO updateFreight(FreighUpdateRequestDomainDTO freight);
 
-    void removeFreight(String freight);
+    void removeFreight(String id);
 
 }

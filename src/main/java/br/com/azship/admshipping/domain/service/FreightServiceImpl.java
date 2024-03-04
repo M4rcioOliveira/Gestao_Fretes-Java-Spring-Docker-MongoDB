@@ -1,9 +1,10 @@
 package br.com.azship.admshipping.domain.service;
 
 import br.com.azship.admshipping.domain.Client;
-import br.com.azship.admshipping.domain.dto.FreighRequestDomainDTO;
+import br.com.azship.admshipping.domain.dto.FreighRegistryRequestDomainDTO;
 import br.com.azship.admshipping.domain.dto.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.Freight;
+import br.com.azship.admshipping.domain.dto.FreighUpdateRequestDomainDTO;
 import br.com.azship.admshipping.domain.repository.FreightRepository;
 import br.com.azship.admshipping.domain.util.DomainPage;
 import br.com.azship.admshipping.domain.util.DomainPageable;
@@ -36,27 +37,42 @@ public class FreightServiceImpl implements FreightService {
 
     @Override
     public FreighResponseDomainDTO findFreightById(String id) {
-        return null;
-    }
 
-    @Override
-    public FreighResponseDomainDTO saveFreight(FreighRequestDomainDTO freight) {
+        Freight freight = freightRepository.findById(id);
 
-        Client client = clientService.findClienyById(freight.client_id());
-
-        Freight savedFreight = freightRepository.save(new Freight(UUID.randomUUID().toString(), client, freight.propriedades()));
-
-        return Freight.toFreightDomainDTO(savedFreight);
+        return new FreighResponseDomainDTO(freight);
 
     }
 
     @Override
-    public FreighResponseDomainDTO updateFreight(FreighRequestDomainDTO freight) {
-        return null;
+    public FreighResponseDomainDTO registerFreight(FreighRegistryRequestDomainDTO dto) {
+
+        Client client = clientService.findClienyById(dto.client_id());
+
+        return Freight.toFreightDomainDTO(freightRepository.save(new Freight(UUID.randomUUID().toString(), client, dto.propriedades())));
+
     }
 
     @Override
-    public void removeFreight(String freight) {
+    public FreighResponseDomainDTO updateFreight(FreighUpdateRequestDomainDTO domainDTO) {
+
+        FreighResponseDomainDTO freightDTO = findFreightById(domainDTO.frete_id());
+
+        Freight freight = FreighResponseDomainDTO.toFreight(freightDTO);
+
+        freight.setPropriedades(domainDTO.propriedades());
+
+        return Freight.toFreightDomainDTO(freightRepository.save(freight));
+
+    }
+
+
+    @Override
+    public void removeFreight(String id) {
+
+        FreighResponseDomainDTO freightDTO = findFreightById(id);
+
+        freightRepository.remove(id);
 
     }
 }

@@ -1,9 +1,6 @@
 package br.com.azship.admshipping.application.rest;
 
-import br.com.azship.admshipping.application.dto.AppPageDTO;
-import br.com.azship.admshipping.application.dto.ApiResponseDTO;
-import br.com.azship.admshipping.application.dto.FreighRequestDTO;
-import br.com.azship.admshipping.application.dto.FreighResponseDTO;
+import br.com.azship.admshipping.application.dto.*;
 import br.com.azship.admshipping.domain.dto.FreighResponseDomainDTO;
 import br.com.azship.admshipping.domain.service.FreightService;
 import br.com.azship.admshipping.domain.util.DomainPage;
@@ -27,26 +24,55 @@ public class FreightController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> saveFreight(@RequestBody FreighRequestDTO freighRequestDTO) {
+    public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> registerFreight(@RequestBody FreighRegistryRequestDTO freighRegistryRequestDTO) {
 
-        FreighResponseDomainDTO body = freightService.saveFreight(FreighRequestDTO.toFreighRequestDomainDTO(freighRequestDTO));
+        FreighResponseDomainDTO body = freightService.registerFreight(FreighRegistryRequestDTO.toFreighRegistryRequestDomainDTO(freighRegistryRequestDTO));
 
         return new ResponseEntity<>(new ApiResponseDTO<>(new FreighResponseDTO(body), null), HttpStatus.CREATED);
 
     }
 
-    @GetMapping("/{value}")
+    @PatchMapping("/update")
+    public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> updateFreight(@RequestBody FreighUpdateRequestDTO freighUpdateRequestDTO) {
+
+        FreighResponseDomainDTO body = freightService.updateFreight(FreighUpdateRequestDTO.toFreighUpdateRequestDomainDTO(freighUpdateRequestDTO));
+
+        return new ResponseEntity<>(new ApiResponseDTO<>(new FreighResponseDTO(body), null), HttpStatus.OK);
+
+    }
+
+
+    @GetMapping("propriedade/{value}")
     public ResponseEntity<ApiResponseDTO<List<FreighResponseDomainDTO>>> findAllBy(@PathVariable String value, @PageableDefault(size = 10, page = 0) Pageable pageable) {
 
         DomainPage<FreighResponseDomainDTO> domain = freightService.findAllBy(value, new DomainPageable(pageable.getPageSize(), pageable.getPageNumber()));
 
         List<FreighResponseDomainDTO> content = domain.content();
 
-        ApiResponseDTO<List<FreighResponseDomainDTO>> dto = new ApiResponseDTO<>(content, new AppPageDTO(domain.totalPages(), domain.totalElements(), domain.pageSize(), domain.pageNumber()));
+        ApiResponseDTO<List<FreighResponseDomainDTO>> body = new ApiResponseDTO<>(content, new AppPageDTO(domain.totalPages(), domain.totalElements(), domain.pageSize(), domain.pageNumber()));
 
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(body, HttpStatus.OK);
 
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> findByID(@PathVariable String id) {
+
+        FreighResponseDomainDTO body = freightService.findFreightById(id);
+
+        return new ResponseEntity<>(new ApiResponseDTO<>(new FreighResponseDTO(body), null), HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseDTO<FreighResponseDTO>> remove(@PathVariable String id) {
+
+        freightService.removeFreight(id);
+
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+
+    }
+
 
 
 }

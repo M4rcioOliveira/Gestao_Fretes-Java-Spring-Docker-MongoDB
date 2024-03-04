@@ -11,7 +11,14 @@ public record FreighResponseDomainDTO(
         Map<String, Object> propriedades
 ) {
 
+    public static Freight toFreight(FreighResponseDomainDTO dto){
+        return new Freight(dto.frete_id(), dto.cliente, dto.propriedades);
+    }
+
     public FreighResponseDomainDTO(Freight freight) {
         this(freight.getId(), freight.getClient(), freight.getPropriedades());
     }
+
+
+
 }
