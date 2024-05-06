@@ -1,4 +1,4 @@
-# AZShip - Gestão de Fretes
+# AZShip - Gestão de Fretes - *Done*
 
 ## Descrição
 O sistema de gestão de fretes da AZShip é uma solução projetada em uma *Arquitetura Hexagonal* para gerenciar com eficácia as informações de frete de seus clientes. Sua capacidade de lidar com a diversidade de informações entre diferentes clientes, adaptando-se a conjuntos exclusivos de propriedades de frete, destaca-se como uma de suas principais características. Essa flexibilidade permite que a aplicação armazene e manipule as informações de forma personalizada, atendendo às necessidades específicas de cada cliente.
